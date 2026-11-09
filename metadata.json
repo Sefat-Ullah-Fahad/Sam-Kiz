@@ -1,0 +1,8 @@
+{
+  "name": "Remix The Glint — Luxury Jewellery",
+  "description": "Sophisticated luxury jewellery e-commerce destination featuring bespoke craftsmanship, fine diamonds, and timeless collections.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

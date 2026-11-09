@@ -55,7 +55,21 @@ export const CATEGORIES: CategoryItem[] = [
 ];
 
 export const HERO_SLIDES: HeroSlide[] = [
-
+ {
+    id: 'slide-1',
+    tag: 'CAMPAIGN 03 · BRACELETS & CUFFS',
+    offerTag: 'Stackable Luxury',
+    italicHeadline: 'Fluid Modern Grace',
+    boldStatement: '18% OFF BRACELETS',
+    noteText: 'Applied automatically at checkout.',
+    title: 'Fluid Grace & Everyday Luxury',
+    subtitle: 'Delicate open cuffs and woven diamond tennis links made to stack or stand alone.',
+    description: 'Effortless versatility designed to transition seamlessly from sunlit morning styling to intimate evening affairs.',
+    category: 'Bracelets',
+    ctaText: 'Shop now',
+    image: '/assets/hero4.png',
+    accent: '#A30008',
+  },
   
   {
     id: 'slide-2',
@@ -69,7 +83,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     description: 'Masterfully set pear-cut zircons cradled in flowing 18k gold bands. Pure minimalism meeting captivating modern grandeur.',
     category: 'Rings',
     ctaText: 'Shop now',
-    image: '/assets/hero_rings_editorial.jpg',
+    image: '/assets/hero5.png',
     accent: '#A30008',
   },
   {

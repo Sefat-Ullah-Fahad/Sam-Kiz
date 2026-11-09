@@ -93,10 +93,8 @@ export const HeroSlider: React.FC = () => {
         </div>
 
         {/* Top-Left Slide Indicator Badge (01 / 04 ›) */}
-        <div className="absolute top-28 sm:top-32 lg:top-36 left-4 sm:left-8 lg:left-12 z-30 flex items-center gap-2 bg-white/95 backdrop-blur-md border border-[#E5E5E5] px-3.5 py-1.5 shadow-xs">
-          <span className="text-xs font-sans font-medium text-[#1A1A1A] tabular-nums tracking-wide">
-            0{currentSlide + 1} / 0{totalSlides}
-          </span>
+        {/* <div className="absolute top-28 sm:top-32 lg:top-36 left-4 sm:left-8 lg:left-12 z-30 flex items-center gap-2 bg-white/95 backdrop-blur-md border border-[#E5E5E5] px-3.5 py-1.5 shadow-xs">
+    
           <button
             type="button"
             onClick={nextSlide}
@@ -105,7 +103,7 @@ export const HeroSlider: React.FC = () => {
           >
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
-        </div>
+        </div> */}
 
         {/* Content Callout Layer (Identical positioning & typography across all slides) */}
         <div className="relative z-20 w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 flex justify-end items-center pt-32 sm:pt-36 lg:pt-24 pb-10 sm:pb-14">

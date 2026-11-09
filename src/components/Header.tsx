@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Search, Heart, ShoppingBag, Menu, X, ChevronDown, Camera, User, ArrowRight } from 'lucide-react';
 import { useJewellery } from '../context/JewelleryContext';
 import { PRODUCTS } from '../data/jewelleryData';
 
 export const Header: React.FC = () => {
   const {
-    currentView,
     cartCount,
     wishlist,
     setIsCartOpen,
@@ -17,7 +16,6 @@ export const Header: React.FC = () => {
     navigateToProduct,
   } = useJewellery();
 
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [announcementIndex, setAnnouncementIndex] = useState(0);
@@ -26,16 +24,6 @@ export const Header: React.FC = () => {
     { title: "Singles' Day Offers · 18% Off Everything", link: 'Shop now →' },
     { title: 'Complimentary UK Insured Express Delivery On Orders Over £100', link: 'Explore →' },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const isOverlayMode = currentView === 'home' && !isScrolled;
 
   const navCategories = [
     'Jewellery',
@@ -158,18 +146,12 @@ export const Header: React.FC = () => {
       </div>
 
       {/* 2. Main Luxury Header & Navigation 
-          High-Contrast Luxury Aesthetic:
           - Logo centered, clean bold typography
           - Navigation menu is 100% VISIBLE on ALL screen sizes (no hidden lg:block)
-          - Deep obsidian glass in overlay mode ensures white text is crystal-clear over any slide image
-          - Sticky crisp white on scroll
+          - The same crisp white header stays sticky while scrolling
       */}
       <header
-        className={`w-full transition-all duration-300 z-40 ${
-          isOverlayMode
-            ? 'absolute top-[35px] inset-x-0 bg-[#0F0F0F]/90 backdrop-blur-md text-white border-b border-white/15 shadow-md'
-            : 'sticky top-0 bg-white/98 text-[#1A1A1A] backdrop-blur-md shadow-xs border-b border-[#E5E5E5]'
-        }`}
+        className="sticky top-0 z-40 w-full bg-white/98 text-[#1A1A1A] backdrop-blur-md shadow-xs border-b border-[#E5E5E5]"
       >
         <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12">
           {/* Main Top Row: Mobile menu / Store info, Centered Brand Logo, Action Icons */}
@@ -181,7 +163,7 @@ export const Header: React.FC = () => {
                 type="button"
                 onClick={() => setMobileMenuOpen(true)}
                 className={`lg:hidden p-2 transition-colors cursor-pointer ${
-                  isOverlayMode ? 'text-white hover:text-white/80' : 'text-[#1A1A1A] hover:text-[#A30008]'
+                  'text-[#1A1A1A] hover:text-[#A30008]'
                 }`}
                 aria-label="Open Navigation Menu"
               >
@@ -191,7 +173,7 @@ export const Header: React.FC = () => {
               {/* Desktop Store Info / Currency Tag */}
               <div
                 className={`hidden lg:flex items-center gap-3 text-[11px] tracking-[0.14em] uppercase font-sans font-medium ${
-                  isOverlayMode ? 'text-white/90' : 'text-[#555555]'
+                  'text-[#555555]'
                 }`}
               >
                 <span>UK (GBP £)</span>
@@ -209,16 +191,14 @@ export const Header: React.FC = () => {
               >
                 <h1
                   className={`font-serif text-2xl sm:text-3xl lg:text-[38px] tracking-[0.26em] font-normal uppercase transition-colors whitespace-nowrap ${
-                    isOverlayMode
-                      ? 'text-white'
-                      : 'text-[#1A1A1A] group-hover:text-[#A30008]'
+                    'text-[#1A1A1A] group-hover:text-[#A30008]'
                   }`}
                 >
                   THE GLINT
                 </h1>
                 <p
                   className={`text-[8.5px] sm:text-[9.5px] tracking-[0.44em] uppercase -mt-0.5 font-sans font-medium whitespace-nowrap ${
-                    isOverlayMode ? 'text-white/90' : 'text-[#666666]'
+                    'text-[#666666]'
                   }`}
                 >
                   FINE JEWELLERY
@@ -229,7 +209,7 @@ export const Header: React.FC = () => {
             {/* Right: Actions (Glamira SEARCH text + Search icon, Camera, Account, Wishlist, Bag) */}
             <div
               className={`flex items-center justify-end gap-3 sm:gap-5 lg:w-1/3 shrink-0 ${
-                isOverlayMode ? 'text-white' : 'text-[#1A1A1A]'
+                'text-[#1A1A1A]'
               }`}
             >
               {/* Glamira SEARCH Button (Clean text + icon on the right, matching screenshot) */}
@@ -237,9 +217,7 @@ export const Header: React.FC = () => {
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
                 className={`flex items-center gap-2 text-xs tracking-[0.16em] uppercase transition-colors group cursor-pointer py-1.5 px-2.5 rounded-xs ${
-                  isOverlayMode
-                    ? 'text-white hover:bg-white/10'
-                    : 'text-[#1A1A1A] hover:text-[#A30008] hover:bg-[#F5F5F5]'
+                  'text-[#1A1A1A] hover:text-[#A30008] hover:bg-[#F5F5F5]'
                 }`}
                 aria-label="Search Collection"
               >
@@ -252,7 +230,7 @@ export const Header: React.FC = () => {
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
                 className={`hidden md:block p-2 transition-colors cursor-pointer rounded-xs ${
-                  isOverlayMode ? 'hover:bg-white/10 text-white' : 'hover:text-[#A30008] hover:bg-[#F5F5F5]'
+                  'hover:text-[#A30008] hover:bg-[#F5F5F5]'
                 }`}
                 title="Visual Search"
                 aria-label="Visual Search"
@@ -265,7 +243,7 @@ export const Header: React.FC = () => {
                 type="button"
                 onClick={() => navigateToStory()}
                 className={`p-2 transition-colors cursor-pointer rounded-xs ${
-                  isOverlayMode ? 'hover:bg-white/10 text-white' : 'hover:text-[#A30008] hover:bg-[#F5F5F5]'
+                  'hover:text-[#A30008] hover:bg-[#F5F5F5]'
                 }`}
                 title="Account / Our Heritage"
                 aria-label="Account"
@@ -278,7 +256,7 @@ export const Header: React.FC = () => {
                 type="button"
                 onClick={() => setIsWishlistOpen(true)}
                 className={`relative p-2 transition-colors cursor-pointer rounded-xs ${
-                  isOverlayMode ? 'hover:bg-white/10 text-white' : 'hover:text-[#A30008] hover:bg-[#F5F5F5]'
+                  'hover:text-[#A30008] hover:bg-[#F5F5F5]'
                 }`}
                 aria-label="View Wishlist"
               >
@@ -295,7 +273,7 @@ export const Header: React.FC = () => {
                 type="button"
                 onClick={() => setIsCartOpen(true)}
                 className={`relative p-2 flex items-center gap-1.5 transition-colors cursor-pointer rounded-xs group ${
-                  isOverlayMode ? 'hover:bg-white/10 text-white' : 'hover:text-[#A30008] hover:bg-[#F5F5F5]'
+                  'hover:text-[#A30008] hover:bg-[#F5F5F5]'
                 }`}
                 aria-label="View Shopping Bag"
               >
@@ -310,25 +288,13 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* 3. Horizontal Category Menu:
-            - ALWAYS 100% VISIBLE across all screen sizes (desktop, tablet, preview frames)
-            - Horizontal scroll on smaller viewports so no item is hidden
-            - Crisp high contrast: white on obsidian in overlay mode, dark charcoal on scroll
-        */}
+        {/* 3. Horizontal Category Menu: always visible, with horizontal scrolling on smaller viewports */}
         <nav
-          className={`w-full border-t transition-colors ${
-            isOverlayMode
-              ? 'bg-[#141414]/95 border-white/15'
-              : 'bg-[#FAFAFA] border-[#E5E5E5]'
-          }`}
+          className="w-full border-t bg-[#FAFAFA] border-[#E5E5E5]"
         >
           <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 overflow-x-auto scrollbar-none">
             <ul
-              className={`flex items-center justify-start md:justify-center gap-5 sm:gap-7 lg:gap-9 py-2.5 text-[11.5px] sm:text-[12px] font-semibold tracking-[0.14em] uppercase transition-colors whitespace-nowrap min-w-max mx-auto ${
-                isOverlayMode
-                  ? 'text-white'
-                  : 'text-[#1A1A1A]'
-              }`}
+              className="flex items-center justify-start md:justify-center gap-5 sm:gap-7 lg:gap-9 py-2.5 text-[11.5px] sm:text-[12px] font-semibold tracking-[0.14em] uppercase transition-colors whitespace-nowrap min-w-max mx-auto text-[#1A1A1A]"
             >
               {navCategories.map((category) => (
                 <li
@@ -341,9 +307,7 @@ export const Header: React.FC = () => {
                     type="button"
                     onClick={() => handleNavClick(category)}
                     className={`flex items-center gap-1.5 transition-colors whitespace-nowrap cursor-pointer px-1 py-0.5 ${
-                      isOverlayMode
-                        ? 'hover:text-[#E23B44]'
-                        : 'hover:text-[#A30008]'
+                      'hover:text-[#A30008]'
                     }`}
                   >
                     <span>{category}</span>
@@ -355,7 +319,7 @@ export const Header: React.FC = () => {
                   {/* Underline hover effect */}
                   <span
                     className={`absolute bottom-0 left-0 w-0 h-[2.5px] transition-all duration-300 ease-out group-hover:w-full ${
-                      isOverlayMode ? 'bg-[#E23B44]' : 'bg-[#A30008]'
+                      'bg-[#A30008]'
                     }`}
                   />
 

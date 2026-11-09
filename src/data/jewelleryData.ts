@@ -55,21 +55,8 @@ export const CATEGORIES: CategoryItem[] = [
 ];
 
 export const HERO_SLIDES: HeroSlide[] = [
-  {
-    id: 'slide-1',
-    tag: 'CAMPAIGN 01 · FINE CHOKERS & DROPS',
-    offerTag: "Singles' Day Offers",
-    italicHeadline: 'Make it your own',
-    boldStatement: '18% OFF EVERYTHING',
-    noteText: 'Applied automatically at checkout.',
-    title: 'The Art of Timeless Elegance',
-    subtitle: 'Necklaces that enhance an outfit and elevate every occasion.',
-    description: 'Discover thoughtfully crafted jewellery designed to celebrate your most beautiful moments with radiant stones and artisanal precision.',
-    category: 'Necklaces',
-    ctaText: 'Shop now',
-    image: '/assets/glamira_hero_clean_canvas.png',
-    accent: '#A30008',
-  },
+
+  
   {
     id: 'slide-2',
     tag: 'CAMPAIGN 02 · SOLITAIRES & BANDS',

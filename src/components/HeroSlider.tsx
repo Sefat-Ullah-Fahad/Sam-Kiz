@@ -79,7 +79,7 @@ export const HeroSlider: React.FC = () => {
                     alt={s.title}
                     referrerPolicy="no-referrer"
                     fetchPriority={index === 0 ? 'high' : 'auto'}
-                    className="w-full h-full object-cover object-[25%_top] sm:object-left-top md:object-[32%_top] xl:object-top transition-transform duration-1000 ease-out"
+                    className="w-full h-full object-cover  sm:object-left-top md:object-[32%_top] xl:object-top transition-transform duration-1000 ease-out"
                   />
                   {/* Desktop Right Scrim: Seamlessly blends into text area for 100% legibility */}
                   <div className="hidden lg:block absolute inset-y-0 right-0 w-[52%] xl:w-[48%] bg-gradient-to-r from-transparent via-[#FAF9F6]/45 to-[#FAF9F6]/90 pointer-events-none" />

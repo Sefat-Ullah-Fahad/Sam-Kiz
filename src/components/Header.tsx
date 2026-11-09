@@ -18,6 +18,7 @@ export const Header: React.FC = () => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const [dropdownLeft, setDropdownLeft] = useState(0);
   const [announcementIndex, setAnnouncementIndex] = useState(0);
 
   const announcements = [
@@ -290,7 +291,8 @@ export const Header: React.FC = () => {
 
         {/* 3. Horizontal Category Menu: always visible, with horizontal scrolling on smaller viewports */}
         <nav
-          className="w-full border-t bg-[#FAFAFA] border-[#E5E5E5]"
+          className="relative w-full border-t bg-[#FAFAFA] border-[#E5E5E5]"
+          onMouseLeave={() => setHoveredCategory(null)}
         >
           <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 overflow-x-auto scrollbar-none">
             <ul
@@ -300,8 +302,19 @@ export const Header: React.FC = () => {
                 <li
                   key={category}
                   className="relative group py-1 cursor-pointer shrink-0"
-                  onMouseEnter={() => setHoveredCategory(category)}
-                  onMouseLeave={() => setHoveredCategory(null)}
+                  onMouseEnter={(event) => {
+                    const navRect = event.currentTarget.closest('nav')?.getBoundingClientRect();
+                    if (navRect) {
+                      const menuWidth = Math.min(540, window.innerWidth - 32);
+                      const itemCenter = event.currentTarget.getBoundingClientRect().left
+                        + event.currentTarget.getBoundingClientRect().width / 2
+                        - navRect.left;
+                      setDropdownLeft(
+                        Math.max(menuWidth / 2 + 16, Math.min(itemCenter, navRect.width - menuWidth / 2 - 16)),
+                      );
+                    }
+                    setHoveredCategory(category);
+                  }}
                 >
                   <button
                     type="button"
@@ -323,61 +336,62 @@ export const Header: React.FC = () => {
                     }`}
                   />
 
-                  {/* Mega Menu Dropdown */}
-                  {hoveredCategory === category && category !== 'Our Heritage' && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-[540px] bg-white border border-[#E5E5E5] shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-1 duration-200 text-[#1A1A1A]">
-                      <div className="flex items-start justify-between pb-3 mb-4 border-b border-[#E5E5E5]">
-                        <div>
-                          <p className="font-serif text-lg text-[#1A1A1A] tracking-wide whitespace-nowrap font-medium">
-                            {category} Collection
-                          </p>
-                          <p className="text-[10px] text-[#666666] tracking-[0.1em] lowercase font-sans whitespace-nowrap">
-                            handcrafted with noble metals & ethically certified stones
-                          </p>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => handleNavClick(category)}
-                          className="text-[10px] tracking-[0.15em] text-[#A30008] hover:text-[#1A1A1A] uppercase flex items-center gap-1 font-bold whitespace-nowrap cursor-pointer"
-                        >
-                          View All <ArrowRight className="w-3 h-3" />
-                        </button>
-                      </div>
-
-                      {/* Mega Menu Previews */}
-                      <div className="grid grid-cols-2 gap-4">
-                        {getCategoryPreview(category).map((prod) => (
-                          <div
-                            key={prod.id}
-                            onClick={() => {
-                              setHoveredCategory(null);
-                              navigateToProduct(prod.id);
-                            }}
-                            className="group/item flex items-center gap-3 p-2.5 bg-white border border-[#E5E5E5] hover:border-[#A30008] transition-all cursor-pointer shadow-2xs"
-                          >
-                            <img
-                              src={prod.image}
-                              alt={prod.name}
-                              referrerPolicy="no-referrer"
-                              className="w-14 h-14 object-cover shrink-0 bg-[#F8F8F8]"
-                            />
-                            <div className="min-w-0 text-left">
-                              <p className="text-[11px] font-semibold text-[#1A1A1A] truncate group-hover/item:text-[#A30008] transition-colors">
-                                {prod.name}
-                              </p>
-                              <p className="text-[11px] text-[#666666] font-sans mt-0.5 whitespace-nowrap font-bold">
-                                {prod.priceFormatted}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </li>
               ))}
             </ul>
           </div>
+          {hoveredCategory && hoveredCategory !== 'Our Heritage' && (
+            <div
+              style={{ left: dropdownLeft }}
+              className="absolute top-full -translate-x-1/2 w-[min(540px,calc(100vw-2rem))] bg-white border border-[#E5E5E5] shadow-2xl p-6 z-50 animate-in fade-in slide-in-from-top-1 duration-200 text-[#1A1A1A]"
+            >
+              <div className="flex items-start justify-between pb-3 mb-4 border-b border-[#E5E5E5]">
+                <div>
+                  <p className="font-serif text-lg text-[#1A1A1A] tracking-wide whitespace-nowrap font-medium">
+                    {hoveredCategory} Collection
+                  </p>
+                  <p className="text-[10px] text-[#666666] tracking-[0.1em] lowercase font-sans whitespace-nowrap">
+                    handcrafted with noble metals & ethically certified stones
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleNavClick(hoveredCategory)}
+                  className="text-[10px] tracking-[0.15em] text-[#A30008] hover:text-[#1A1A1A] uppercase flex items-center gap-1 font-bold whitespace-nowrap cursor-pointer"
+                >
+                  View All <ArrowRight className="w-3 h-3" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                {getCategoryPreview(hoveredCategory).map((prod) => (
+                  <div
+                    key={prod.id}
+                    onClick={() => {
+                      setHoveredCategory(null);
+                      navigateToProduct(prod.id);
+                    }}
+                    className="group/item flex items-center gap-3 p-2.5 bg-white border border-[#E5E5E5] hover:border-[#A30008] transition-all cursor-pointer shadow-2xs"
+                  >
+                    <img
+                      src={prod.image}
+                      alt={prod.name}
+                      referrerPolicy="no-referrer"
+                      className="w-14 h-14 object-cover shrink-0 bg-[#F8F8F8]"
+                    />
+                    <div className="min-w-0 text-left">
+                      <p className="text-[11px] font-semibold text-[#1A1A1A] truncate group-hover/item:text-[#A30008] transition-colors">
+                        {prod.name}
+                      </p>
+                      <p className="text-[11px] text-[#666666] font-sans mt-0.5 whitespace-nowrap font-bold">
+                        {prod.priceFormatted}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </nav>
       </header>
 
